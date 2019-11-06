@@ -1,0 +1,27 @@
+{
+  "name": "log-yourself-in",
+  "version": "1.0.0",
+  "description": "Create login access",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amaury2409/Log-yourself-in.git"
+  },
+  "author": "damien amaury",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amaury2409/Log-yourself-in/issues"
+  },
+  "homepage": "https://github.com/amaury2409/Log-yourself-in#readme",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "node-sass": "^4.13.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
