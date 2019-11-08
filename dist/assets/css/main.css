@@ -1,0 +1,22 @@
+label {
+  float: left;
+  text-align: right;
+  margin-right: 15px;
+  width: 100px; }
+
+#content {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+  #content form {
+    padding: 42px; }
+
+.shadow {
+  box-shadow: 3px 3px 55px 5px cornflowerblue; }
+
+/*
+textarea:focus, input:focus {
+  border: 2px solid aquamarine;
+}*/
