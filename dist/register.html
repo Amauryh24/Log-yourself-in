@@ -2,41 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+<div id="mybck"></div>
 <div id="content" class="shadow">
+
     <form action="#" method="post">
-        <div>
-            <label>Username :</label>
-            <input type="text" placeholder="text">
+        <p id="titre">Student registration</p>
+        <div class="formfield">
+            <input type="text" placeholder="Usernanme" required>
         </div>
-        <div>
-            <label>Email :</label>
-            <input type="email" placeholder="text">
+        <div class="formfield">
+            <input type="email"  placeholder="Email"  required>
         </div>
-        <div>
-            <label>Password :</label>
-            <input type="password" placeholder="email">
+        <div class="formfield">
+            <input type="password" name="pwd" required>
         </div>
-        <div>
-            <label>first name :</label>
+        <div class="formfield">
+            <input type="password" name="pwdc" required>
+        </div>
+        <div class="formfield">
             <input type="text" placeholder="first name">
         </div>
-        <div>
-            <label>last name :</label>
+        <div class="formfield">
             <input type="text" placeholder="last name">
         </div>
-        <div>
-            <label>linkedin :</label>
+        <div class="formfield">
             <input type="url" placeholder="url">
         </div>
-        <div>
-            <label>github :</label>
+        <div class="formfield">
             <input type="url" placeholder="url">
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">register</button>
     </form>
 </div>
 <script src="main.js"></script>

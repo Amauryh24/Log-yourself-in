@@ -1,3 +1,33 @@
+@mixin placeholder($color, $size:"") {
+  &::-webkit-input-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &:-moz-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &::-moz-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+}
+[placeholder] {
+  @include placeholder(red, 15px);
+}
+
 label {
   float: left;
   text-align: right;
@@ -11,14 +41,53 @@ label {
   left: 50%;
   transform: translate(-50%, -50%);
   form{
-    padding: 42px;
+    background: rgba(181, 181, 181, 0.3);
+    border-radius:20px;
+    input{
+      border: none;
+      background:none;
+      border-bottom: 1px solid #727286;
+    }
+    button{
+      color: #eae9ec;
+      text-align: center;
+      text-transform: uppercase;
+      border: none;
+      background: rgba(181, 181, 181, 0.6);
+      padding: 5px;
+    }
   }
+
 }
+
+
 .shadow {
-  box-shadow: 3px 3px 55px 5px cornflowerblue;
+  //box-shadow: 3px 3px 55px 5px cornflowerblue;
+}
+.formfield{
+  margin: 20px;
 }
 
-
+#mybck{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+  filter: blur(35px);
+  background: rgb(181,181,181);
+  background: radial-gradient(circle, rgba(181,181,181,1) 0%, rgba(0,0,0,1) 100%);
+}
+#titre{
+  text-align: center;
+  text-transform: uppercase;
+  background: rgba(181, 181, 181, 0.6);
+  padding: 10px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  color: #eae9ec;
+}
 /*
 textarea:focus, input:focus {
   border: 2px solid aquamarine;
