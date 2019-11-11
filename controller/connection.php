@@ -1,11 +1,16 @@
 <?php
+
 // connect
-try {
-    $bdd =  new PDO("mysql:host=database;dbname=becode", "root", "root");
-} catch (PDOException $e) {
-    print "navré, la base de données n'est pas disponible, veuillez réessayer plus tard";
-    die();
-}
+
+// try {
+//     // $bdd =  new PDO("mysql:host=database;dbname=becode", "root", "root");
+//     $bdd =  new PDO("mysql:host=remotemysql.com;dbname=YD6CQChWhy", "YD6CQChWhy", "lmbvbf43jB");
+// } catch (PDOException $e) {
+//     print "navré, la base de données n'est pas disponible, veuillez réessayer plus tard";
+//     die();
+// }
+
+
 $errors = [];
 
 // Sanitization
@@ -40,6 +45,14 @@ if ($passwordOne == "" || $passwordTwo == "") {
     ($passwordOne === $passwordTwo) ? 'password valide' :  $errors['password'] = "your password are not similar"  ;
 }
 
+if (!empty($linkedin)) {
+    filter_var($linkedin, FILTER_VALIDATE_URL) ? 'url valid' :  $errors['linkedin'] = "please, validate your Linkedin URL " ;
+}
+
+if (!empty($github)) {
+    filter_var($github, FILTER_VALIDATE_URL) ? 'url valid' :  $errors['github'] = "please, validate your Github URL " ;
+}
+
 // execute
 
 if (count($errors)> 0) {
@@ -48,10 +61,19 @@ if (count($errors)> 0) {
     print_r($errors);
     echo "</pre>";
 } else {
-    echo 'validez';
-    $insertmbr = $bdd->prepare("INSERT INTO student (`username`,`email`,`motdepasse`,`first_name`,`last_name`,`linkedin`) VALUE(?.?.?.?.?.?) ");
-    $insertmbr -> execute(array($username,$email,$passwordOne,$firstname,$lastname,$linkedin));
-}
+    var_dump($_POST);
+   
 
-// $insertmbr = $pdo->prepare("INSERT INTO student(username,email,password) VALUE(?.?.?)");
-//                 $insertmbr->execute(array($username,$passwordOne,$email));
+    $bdd =  new PDO("mysql:host=remotemysql.com;dbname=YD6CQChWhy", "YD6CQChWhy", "lmbvbf43jB");
+
+    $request = $bdd->prepare('INSERT INTO student(username, email, pwd) VALUES(?, ?, ?)');
+    $request->execute(array($username,$email,$passwordOne));
+    echo($request);
+    var_dump($bdd);
+    // $insertmbr = $bdd->prepare("INSERT INTO student(username,email,pwd) VALUE(?, ?, ?)");
+    // $insertmbr->execute([$username,$email,$passwordOne]);
+    echo 'validez';
+    
+    // $insertmbr = $bdd->prepare("INSERT INTO student (`username`,`email`,`motdepasse`,`first_name`,`last_name`,`linkedin`) VALUE(?.?.?.?.?.?) ");
+    // $insertmbr -> execute([$username,$email,$passwordOne,$firstname,$lastname,$linkedin]);
+}
