@@ -1,7 +1,7 @@
 <?php
 // connect
 try {
-    $pdo =  new PDO("mysql:host=database;dbname=becode", "root", "root");
+    $bdd =  new PDO("mysql:host=database;dbname=becode", "root", "root");
 } catch (PDOException $e) {
     print "navré, la base de données n'est pas disponible, veuillez réessayer plus tard";
     die();
@@ -47,7 +47,10 @@ if (count($errors)> 0) {
     echo "<pre>";
     print_r($errors);
     echo "</pre>";
-    exit;
+} else {
+    echo 'validez';
+    $insertmbr = $bdd->prepare("INSERT INTO student (`username`,`email`,`motdepasse`,`first_name`,`last_name`,`linkedin`) VALUE(?.?.?.?.?.?) ");
+    $insertmbr -> execute(array($username,$email,$passwordOne,$firstname,$lastname,$linkedin));
 }
 
 // $insertmbr = $pdo->prepare("INSERT INTO student(username,email,password) VALUE(?.?.?)");

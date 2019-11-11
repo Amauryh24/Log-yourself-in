@@ -39,9 +39,7 @@ include 'includes/connection.php';
     </div>
     <div class="bug">
         <?php
-if (isset($error)) {
-    echo $error;
-}
+
 ?>
     </div>
 
