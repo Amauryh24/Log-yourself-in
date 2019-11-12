@@ -1,14 +1,11 @@
 <?php
 
 // connect
-
-// try {
-//     // $bdd =  new PDO("mysql:host=database;dbname=becode", "root", "root");
-//     $bdd =  new PDO("mysql:host=remotemysql.com;dbname=YD6CQChWhy", "YD6CQChWhy", "lmbvbf43jB");
-// } catch (PDOException $e) {
-//     print "navré, la base de données n'est pas disponible, veuillez réessayer plus tard";
-//     die();
-// }
+try {
+    $bdd =  new PDO("mysql:host=37.59.55.185;dbname=YD6CQChWhy;charset=utf8;port=3306", "YD6CQChWhy", "lmbvbf43jB");
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
 
 
 $errors = [];
@@ -23,22 +20,27 @@ $lastname = filter_var($_POST['lastname'], FILTER_SANITIZE_STRING);
 $linkedin = filter_var($_POST['linkedin'], FILTER_SANITIZE_URL);
 $github = filter_var($_POST['github'], FILTER_SANITIZE_URL);
 
-// validate
+
+$usernamelogin =  filter_var($_POST['usernamelogin'], FILTER_SANITIZE_STRING);
+$passwordlogin = filter_var($_POST['passwordlogin'], FILTER_SANITIZE_STRING);
+
+
+// validate register
 if ($email == "") {
-    echo "please enter your email";
+    $errors['email'] = "please enter your email" ;
 } else {
     filter_var($email, FILTER_VALIDATE_EMAIL) ? " email valid " : $errors['email'] = "This address is invalid." ;
 }
 
 if ($username == "") {
-    echo "please enter your username";
+    $errors['username'] = "please enter your username";
 } elseif (!empty($username)) {
     $usernameLenght = strlen($username);
     ($usernameLenght <=255) ? ' username valide ' : $errors['username'] = "your username exceed 255 letters" ;
 }
 
 if ($passwordOne == "" || $passwordTwo == "") {
-    echo "please add or confirm your password";
+    $errors['password'] = "please add or confirm your password";
 } elseif (!empty($passwordOne) && !empty($passwordTwo)) {
     $password_crypted_One = sha1($passwordOne);
     $password_crypted_Two = sha1($passwordTwo);
@@ -53,27 +55,29 @@ if (!empty($github)) {
     filter_var($github, FILTER_VALIDATE_URL) ? 'url valid' :  $errors['github'] = "please, validate your Github URL " ;
 }
 
+
+// requetes
+$reqmail = $bdd->prepare("SELECT * FROM Student WHERE username= ?");
+$reqmail->execute(array($username));
+$usernameexist = $reqmail->rowCount();
+($usernameexist == 0) ? 'valide' : $errors['usernameexist'] = "username déjà utilisé" ;
+
+$reqmail = $bdd->prepare("SELECT * FROM Student WHERE email= ?");
+$reqmail->execute(array($email));
+$emailexist = $reqmail->rowCount();
+($emailexist == 0) ? 'valide' : $errors['emailexist'] = "Email déjà utilisé" ;
+
 // execute
+if (isset($_POST['inscription'])) {
+    if (count($errors)> 0) {
+        echo "There are mistakes!";
+        echo "<pre>";
+        print_r($errors);
+        echo "</pre>";
+    } else {
+        $request = $bdd->prepare('INSERT INTO Student (username, email, `password`, firstname, lastname, linkedin, github) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $request->execute(array($username,$email, $password_crypted_One,$firstname,$lastname,$linkedin,$github));
 
-if (count($errors)> 0) {
-    echo "There are mistakes!";
-    echo "<pre>";
-    print_r($errors);
-    echo "</pre>";
-} else {
-    var_dump($_POST);
-   
-
-    $bdd =  new PDO("mysql:host=remotemysql.com;dbname=YD6CQChWhy", "YD6CQChWhy", "lmbvbf43jB");
-
-    $request = $bdd->prepare('INSERT INTO student(username, email, pwd) VALUES(?, ?, ?)');
-    $request->execute(array($username,$email,$passwordOne));
-    echo($request);
-    var_dump($bdd);
-    // $insertmbr = $bdd->prepare("INSERT INTO student(username,email,pwd) VALUE(?, ?, ?)");
-    // $insertmbr->execute([$username,$email,$passwordOne]);
-    echo 'validez';
-    
-    // $insertmbr = $bdd->prepare("INSERT INTO student (`username`,`email`,`motdepasse`,`first_name`,`last_name`,`linkedin`) VALUE(?.?.?.?.?.?) ");
-    // $insertmbr -> execute([$username,$email,$passwordOne,$firstname,$lastname,$linkedin]);
+        echo 'Votre compte à bien été crée';
+    }
 }

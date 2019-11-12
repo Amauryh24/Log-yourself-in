@@ -1,6 +1,4 @@
-<?php
-// include 'includes/connection.php';
-?>
+
 <?php
 include 'view/top.php';
 ?>
