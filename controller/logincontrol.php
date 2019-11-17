@@ -15,10 +15,18 @@ $usernamelogin =  filter_var($_POST['usernamelogin'], FILTER_SANITIZE_STRING);
 $passwordlogin = filter_var($_POST['passwordlogin'], FILTER_SANITIZE_STRING);
 
 // validate login
-if (!empty($passwordlogin) && !empty($usernamelogin)) {
-} else {
-    $errors['login'] = "please, all field must be complete " ;
-}
+
+(!empty($passwordlogin) && !empty($usernamelogin)) ? '' :  $errors['login'] = "please, all field must be complete " ; ;
+$passwordlogin_crypted = sha1($passwordlogin);
+
+$requser = $bdd->prepare("SELECT username FROM Student WHERE username = ? AND `password` = ? ");
+$requser->execute(array($usernamelogin,$passwordlogin_crypted));
+$userexist = $requser->rowCount();
+
+($userexist == 1) ? 'welcome' : $errors['login'] = "bad mail or bad password " ;
+
+
+
 
 // execute
 
@@ -29,6 +37,6 @@ if (isset($_POST['login'])) {
         print_r($errors);
         echo "</pre>";
     } else {
-        echo 'Bienvenue sur votre comtpe';
+        echo 'Welcome On your account';
     }
 }

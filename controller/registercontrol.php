@@ -21,10 +21,6 @@ $linkedin = filter_var($_POST['linkedin'], FILTER_SANITIZE_URL);
 $github = filter_var($_POST['github'], FILTER_SANITIZE_URL);
 
 
-$usernamelogin =  filter_var($_POST['usernamelogin'], FILTER_SANITIZE_STRING);
-$passwordlogin = filter_var($_POST['passwordlogin'], FILTER_SANITIZE_STRING);
-
-
 // validate register
 if ($email == "") {
     $errors['email'] = "please enter your email" ;
